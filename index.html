@@ -178,13 +178,17 @@
         return;
       }
 
-      const formData = {
-        date: dateInput.value,
-        type: currentType,
-        category: categorySelect.value,
-        description: descriptionInput.value,
-        amount: currentAmount
-      };
+    const rawAmount = parseFloat(currentAmount.replace(/,/g, '')) || 0;
+const signedAmount = currentType === "Expense" ? -Math.abs(rawAmount) : rawAmount;
+
+const formData = {
+  date: dateInput.value,
+  type: currentType,
+  category: categorySelect.value,
+  description: descriptionInput.value,
+  amount: signedAmount
+};
+
 
       try {
         await fetch("https://script.google.com/macros/s/AKfycbyzPNcmkrKMc1SEJ3VipFPUu6bi9hbumwrZA2_UuhbNPJbAr-jR9qbLVpRTPx3QSatrIw/exec", {
