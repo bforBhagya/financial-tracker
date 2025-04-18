@@ -3,246 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FinTracker 💰</title>
-  <style>
-    :root {
-      --bg-light: #f4f7fa;
-      --bg-dark: #1f1f1f;
-      --text-light: #333;
-      --text-dark: #f4f7fa;
-      --button-light: #007bff;
-      --button-dark: #007bff;
-      --input-light: #fff;
-      --input-dark: #333;
-      --input-border-light: #ccc;
-      --input-border-dark: #555;
-      --card-light: #fff;
-      --card-dark: #444;
-    }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: var(--bg-light);
-      margin: 0;
-      padding: 20px;
-      color: var(--text-light);
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-
-    body.dark {
-      background: var(--bg-dark);
-      color: var(--text-dark);
-    }
-
-    .container {
-      max-width: 400px;
-      margin: auto;
-      background: var(--card-light);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: background 0.3s ease;
-    }
-
-    .container.dark {
-      background: var(--card-dark);
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #themeToggle {
-      margin-left: 10px;
-      cursor: pointer;
-      font-size: 24px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      padding: 10px 15px;
-      border-radius: 50%;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    body.dark #themeToggle {
-      background-color: #333;
-      color: #fff;
-    }
-
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 10px;
-    }
-
-    input, select, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 5px;
-      border-radius: 8px;
-      font-size: 16px;
-      border: 1px solid var(--input-border-light);
-      background: var(--input-light);
-      color: var(--text-light);
-      transition: background 0.3s, border 0.3s, color 0.3s;
-    }
-
-    body.dark input, body.dark select, body.dark button {
-      background: var(--input-dark);
-      color: var(--text-dark);
-      border: 1px solid var(--input-border-dark);
-    }
-
-    button[type="submit"] {
-      background-color: var(--button-light);
-      color: white;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 20px;
-    }
-
-    body.dark button[type="submit"] {
-      background-color: var(--button-dark);
-    }
-
-    .type-btns {
-      display: flex;
-      justify-content: space-between;
-      margin: 10px 0;
-    }
-
-    .type-btns button {
-      width: 48%;
-      padding: 12px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      cursor: pointer;
-    }
-
-    .income-btn {
-      background-color: green;
-    }
-
-    .expense-btn {
-      background-color: red;
-    }
-
-    #categoryContainer {
-      margin-top: 20px;
-    }
-
-    #categoryContainer.expense {
-      display: block;
-    }
-
-    #categoryContainer.income {
-      display: block;
-    }
-
-    #numpad {
-      display: none;
-      position: fixed;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #1f1f1f;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-      z-index: 999;
-    }
-
-    #numpad button {
-      font-size: 20px;
-      padding: 15px;
-      border: none;
-      border-radius: 8px;
-      background: #333;
-      color: white;
-    }
-
-    #numpad div {
-      display: grid;
-      grid-template-columns: repeat(3, 60px);
-      gap: 10px;
-      justify-content: center;
-    }
-
-    #numpad .num-btn {
-      font-size: 20px;
-      padding: 10px;
-    }
-
-    #numpad .amount-display {
-      font-size: 48px;
-      color: white;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    #numpad #closeNumpad {
-      background: #007bff;
-      margin-top: 10px;
-    }
-  </style>
+  <title>FinTracker</title>
 </head>
 <body>
   <div class="container">
-    <h1>💰 FinTracker
-      <span id="themeToggle" onclick="toggleTheme()">🌙</span>
-    </h1>
+    <h1>FinTracker</h1>
     <form id="financeForm">
-      <label for="date">📅 Date</label>
+      <label for="date">Date</label>
       <input type="date" id="date" name="date" value="" required />
 
-      <label for="type">🔁 Type</label>
+      <label for="type">Type</label>
       <div class="type-btns">
-        <button type="button" class="income-btn" onclick="setType('income')">💵 Income</button>
-        <button type="button" class="expense-btn" onclick="setType('expense')">💸 Expense</button>
+        <button type="button" class="income-btn" onclick="setType('income')">Income</button>
+        <button type="button" class="expense-btn" onclick="setType('expense')">Expense</button>
       </div>
 
-      <div id="categoryContainer" class="category-container">
-        <label for="category">📂 Category</label>
+      <div id="categoryContainer">
+        <label for="category">Category</label>
         <select id="category" required>
           <option value="">Select a category</option>
           <!-- Income Categories -->
-          <option class="income" value="salary">💼 Salary</option>
-          <option class="income" value="allowance">🧳 Allowance</option>
-          <option class="income" value="deposit">💳 Deposit</option>
-          <option class="income" value="loan_repay">💸 Loan Repay</option>
+          <option class="income" value="salary">Salary</option>
+          <option class="income" value="allowance">Allowance</option>
+          <option class="income" value="deposit">Deposit</option>
+          <option class="income" value="loan_repay">Loan Repay</option>
           <!-- Expense Categories -->
-          <option class="expense" value="food">🍔 Food</option>
-          <option class="expense" value="entertainment">🎮 Entertainment</option>
-          <option class="expense" value="clothes">👗 Clothes</option>
-          <option class="expense" value="investments">📈 Investments</option>
-          <option class="expense" value="bank_transfers">🏦 Bank Transfers</option>
-          <option class="expense" value="communication">📞 Communication</option>
-          <option class="expense" value="gifts">🎁 Gifts</option>
-          <option class="expense" value="vehicle">🚗 Vehicle</option>
-          <option class="expense" value="bills">📑 Bills</option>
+          <option class="expense" value="food">Food</option>
+          <option class="expense" value="entertainment">Entertainment</option>
+          <option class="expense" value="clothes">Clothes</option>
+          <option class="expense" value="investments">Investments</option>
+          <option class="expense" value="bank_transfers">Bank Transfers</option>
+          <option class="expense" value="communication">Communication</option>
+          <option class="expense" value="gifts">Gifts</option>
+          <option class="expense" value="vehicle">Vehicle</option>
+          <option class="expense" value="bills">Bills</option>
         </select>
       </div>
 
-      <label for="description">📝 Description</label>
+      <label for="description">Description</label>
       <input type="text" id="description" required />
 
-      <label for="amount">💲 Amount</label>
+      <label for="amount">Amount</label>
       <input type="text" id="amount" readonly placeholder="Tap to enter amount" required onclick="openNumpad()" />
 
-      <button type="submit">📤 Submit</button>
+      <button type="submit">Submit</button>
     </form>
   </div>
 
   <!-- Custom Number Pad -->
-  <div id="numpad">
+  <div id="numpad" style="display:none;">
     <div class="amount-display" id="amount-display">0</div>
     <div>
       <button class="num-btn">1</button>
@@ -254,18 +63,62 @@
       <button class="num-btn">7</button>
       <button class="num-btn">8</button>
       <button class="num-btn">9</button>
-      <button id="clearAmount">🧹</button>
+      <button id="clearAmount">Clear</button>
       <button class="num-btn">0</button>
-      <button id="backspace">←</button>
+      <button id="backspace">Backspace</button>
     </div>
-    <button id="closeNumpad">✔️ Enter</button>
+    <button id="closeNumpad">Enter</button>
   </div>
 
   <script>
-    let isDarkMode = false;
     let selectedType = "";
 
-    // Toggle Theme Function
-    function toggleTheme() {
-      isDarkMode = !isDarkMode;
-      document.body.classList
+    // Set Type (Income or Expense)
+    function setType(type) {
+      selectedType = type;
+      const categories = document.getElementById('category').children;
+      for (let i = 0; i < categories.length; i++) {
+        if (categories[i].classList.contains(type)) {
+          categories[i].style.display = "block";
+        } else {
+          categories[i].style.display = "none";
+        }
+      }
+    }
+
+    // Open the numpad
+    function openNumpad() {
+      document.getElementById('numpad').style.display = "block";
+    }
+
+    // Update the amount on the display
+    document.querySelectorAll('.num-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const display = document.getElementById('amount-display');
+        let currentAmount = display.innerText;
+        currentAmount = currentAmount === '0' ? '' : currentAmount;
+        display.innerText = currentAmount + button.innerText;
+      });
+    });
+
+    // Clear amount
+    document.getElementById('clearAmount').addEventListener('click', () => {
+      document.getElementById('amount-display').innerText = '0';
+    });
+
+    // Backspace
+    document.getElementById('backspace').addEventListener('click', () => {
+      const display = document.getElementById('amount-display');
+      let currentAmount = display.innerText;
+      display.innerText = currentAmount.slice(0, -1) || '0';
+    });
+
+    // Close numpad
+    document.getElementById('closeNumpad').addEventListener('click', () => {
+      const display = document.getElementById('amount-display').innerText;
+      document.getElementById('amount').value = display;
+      document.getElementById('numpad').style.display = "none";
+    });
+  </script>
+</body>
+</html>
