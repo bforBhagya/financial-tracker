@@ -132,6 +132,18 @@
       background-color: red;
     }
 
+    #categoryContainer {
+      display: none;
+    }
+
+    #categoryContainer.expense {
+      display: block;
+    }
+
+    #categoryContainer.income {
+      display: block;
+    }
+
     #numpad {
       display: none;
       position: fixed;
@@ -194,15 +206,27 @@
         <button type="button" class="expense-btn" onclick="setType('expense')">💸 Expense</button>
       </div>
 
-      <label for="category">📂 Category</label>
-      <select id="category" required>
-        <option value="">Select a category</option>
-        <option value="salary">💼 Salary</option>
-        <option value="food">🍔 Food</option>
-        <option value="transport">🚗 Transport</option>
-        <option value="shopping">🛍️ Shopping</option>
-        <option value="other">🧩 Other</option>
-      </select>
+      <div id="categoryContainer" class="category-container">
+        <label for="category">📂 Category</label>
+        <select id="category" required>
+          <option value="">Select a category</option>
+          <!-- Income Categories -->
+          <option class="income" value="salary">💼 Salary</option>
+          <option class="income" value="allowance">🧳 Allowance</option>
+          <option class="income" value="deposit">💳 Deposit</option>
+          <option class="income" value="loan_repay">💸 Loan Repay</option>
+          <!-- Expense Categories -->
+          <option class="expense" value="food">🍔 Food</option>
+          <option class="expense" value="entertainment">🎮 Entertainment</option>
+          <option class="expense" value="clothes">👗 Clothes</option>
+          <option class="expense" value="investments">📈 Investments</option>
+          <option class="expense" value="bank_transfers">🏦 Bank Transfers</option>
+          <option class="expense" value="communication">📞 Communication</option>
+          <option class="expense" value="gifts">🎁 Gifts</option>
+          <option class="expense" value="vehicle">🚗 Vehicle</option>
+          <option class="expense" value="bills">📑 Bills</option>
+        </select>
+      </div>
 
       <label for="description">📝 Description</label>
       <input type="text" id="description" required />
@@ -239,66 +263,4 @@
     const amountInput = document.getElementById("amount");
     const numpad = document.getElementById("numpad");
     const amountDisplay = document.getElementById("amount-display");
-    let transactionType = "income";
-    let currentAmount = "";
-
-    function setType(type) {
-      transactionType = type;
-    }
-
-    // Format the number to financial format (with commas and 2 decimal places)
-    function formatAmount(amount) {
-      let num = parseFloat(amount.replace(/,/g, '')) || 0;
-      return num.toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
-
-    // Update the displayed amount on the numpad
-    function updateAmountDisplay() {
-      amountDisplay.textContent = formatAmount(currentAmount);
-    }
-
-    // Open numpad
-    function openNumpad() {
-      numpad.style.display = "block";
-    }
-
-    // Add numbers to the currentAmount
-    document.querySelectorAll(".num-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        currentAmount += btn.textContent;
-        updateAmountDisplay();
-      });
-    });
-
-    // Backspace button to remove the last character
-    document.getElementById("backspace").addEventListener("click", () => {
-      currentAmount = currentAmount.slice(0, -1);
-      updateAmountDisplay();
-    });
-
-    // Clear the amount
-    document.getElementById("clearAmount").addEventListener("click", () => {
-      currentAmount = "";
-      updateAmountDisplay();
-    });
-
-    document.getElementById("closeNumpad").addEventListener("click", () => {
-      amountInput.value = formatAmount(currentAmount);
-      numpad.style.display = "none";
-    });
-
-    // Toggle dark/light mode
-    function toggleTheme() {
-      document.body.classList.toggle("dark");
-      document.querySelector(".container").classList.toggle("dark");
-      const currentTheme = document.body.classList.contains("dark") ? "🌞" : "🌙";
-      document.getElementById("themeToggle").textContent = currentTheme;
-    }
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      alert("Form submitted successfully!");
-    });
-  </script>
-</body>
-</html>
+    const categoryContainer = document.get
