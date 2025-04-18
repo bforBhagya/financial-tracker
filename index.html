@@ -139,7 +139,7 @@
       <input type="text" id="description" required />
 
       <label for="amount">💲 Amount</label>
-      <input type="text" id="amount" readonly placeholder="Tap to enter amount" required />
+      <input type="text" id="amount" readonly placeholder="Tap to enter amount" required onclick="openNumpad()" />
 
       <button type="submit">📤 Submit</button>
     </form>
@@ -186,6 +186,11 @@
     // Update the displayed amount on the numpad
     function updateAmountDisplay() {
       amountDisplay.textContent = formatAmount(currentAmount);
+    }
+
+    // Open numpad
+    function openNumpad() {
+      numpad.style.display = "block";
     }
 
     // Add numbers to the currentAmount
