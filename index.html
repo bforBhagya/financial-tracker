@@ -37,7 +37,7 @@
       font-size: 16px;
     }
     input#amount {
-      font-size: 32px;
+      font-size: 16px;
       text-align: center;
     }
     button[type="submit"] {
@@ -96,6 +96,16 @@
       gap: 10px;
       justify-content: center;
     }
+    #numpad .num-btn {
+      font-size: 20px;
+      padding: 10px;
+    }
+    #numpad .amount-display {
+      font-size: 48px;
+      color: white;
+      text-align: center;
+      margin-bottom: 10px;
+    }
     #closeNumpad {
       background: #007bff;
       margin-top: 10px;
@@ -137,6 +147,7 @@
 
   <!-- Custom Number Pad -->
   <div id="numpad">
+    <div class="amount-display" id="amount-display">0</div>
     <div>
       <button class="num-btn">1</button>
       <button class="num-btn">2</button>
@@ -158,7 +169,9 @@
     const form = document.getElementById("financeForm");
     const amountInput = document.getElementById("amount");
     const numpad = document.getElementById("numpad");
+    const amountDisplay = document.getElementById("amount-display");
     let transactionType = "income";
+    let currentAmount = "";
 
     function setType(type) {
       transactionType = type;
@@ -168,22 +181,33 @@
       numpad.style.display = "block";
     });
 
+    // Update the displayed amount on the numpad
+    function updateAmountDisplay() {
+      amountDisplay.textContent = currentAmount || "0";
+    }
+
+    // Add numbers to the currentAmount
     document.querySelectorAll(".num-btn").forEach(btn => {
       btn.addEventListener("click", () => {
-        amountInput.value += btn.textContent;
-        amountInput.style.fontSize = "32px"; // Adjust font size when typing
+        currentAmount += btn.textContent;
+        updateAmountDisplay();
       });
     });
 
+    // Backspace button to remove the last character
     document.getElementById("backspace").addEventListener("click", () => {
-      amountInput.value = amountInput.value.slice(0, -1);
+      currentAmount = currentAmount.slice(0, -1);
+      updateAmountDisplay();
     });
 
+    // Clear the amount
     document.getElementById("clearAmount").addEventListener("click", () => {
-      amountInput.value = "";
+      currentAmount = "";
+      updateAmountDisplay();
     });
 
     document.getElementById("closeNumpad").addEventListener("click", () => {
+      amountInput.value = currentAmount; // Update the amount field with the final number
       numpad.style.display = "none";
     });
 
@@ -193,7 +217,7 @@
       const date = document.getElementById("date").value;
       const category = document.getElementById("category").value;
       const description = document.getElementById("description").value;
-      const amount = amountInput.value;
+      const amount = currentAmount;
 
       if (amount.trim() === "") {
         alert("Please enter the amount 💸");
@@ -205,7 +229,8 @@
       // Reset form except date
       document.getElementById("category").value = "";
       document.getElementById("description").value = "";
-      amountInput.value = "";
+      currentAmount = "";
+      updateAmountDisplay();
     });
   </script>
 </body>
