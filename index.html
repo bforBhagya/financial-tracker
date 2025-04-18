@@ -56,16 +56,21 @@
       font-weight: bold;
     }
     #expenseBtn {
-      background-color: #f39c12; /* Yellow */
+      background-color: #e74c3c; /* Red */
     }
     #expenseBtn.active {
-      background-color: #f1c40f; /* Darker yellow */
+      background-color: #c0392b; /* Darker red */
     }
     #incomeBtn {
       background-color: #2ecc71; /* Green */
     }
     #incomeBtn.active {
       background-color: #27ae60; /* Darker green */
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -76,8 +81,8 @@
     
     <!-- Swap the button positions here -->
     <div class="toggle-buttons">
-      <button type="button" id="incomeBtn" class="active">Income</button>
-      <button type="button" id="expenseBtn">Expense</button>
+      <button type="button" id="incomeBtn">Income</button>
+      <button type="button" id="expenseBtn" class="active">Expense</button>
     </div>
     
     <select id="category" required>
@@ -87,6 +92,7 @@
     <input type="text" id="description" placeholder="Description" />
     <input type="number" id="amount" placeholder="Amount (LKR)" required />
     <button type="submit" class="submit-button">Submit</button>
+    <div id="errorMessage" class="error" style="display:none;">Please enter an amount.</div>
   </form>
 
   <script>
@@ -96,13 +102,14 @@
     const incomeBtn = document.getElementById("incomeBtn");
     const categorySelect = document.getElementById("category");
     const amountInput = document.getElementById("amount");
+    const errorMessage = document.getElementById("errorMessage");
     
     const categories = {
       "Income": ["Deposits", "Salary", "Allowance", "Loan Repays"],
       "Expense": ["Food", "Entertainment", "Vehicle", "Transport", "Investments", "Bank Transfers", "Clothes"]
     };
     
-    let currentType = "Income"; // Default is Income
+    let currentType = "Expense"; // Default is Expense
 
     function updateCategories() {
       categorySelect.innerHTML = '<option value="" disabled selected>Select Category</option>';
@@ -129,7 +136,7 @@
       updateCategories();
     });
 
-    // Initialize with default (Income)
+    // Initialize with default (Expense)
     updateCategories();
 
     // Set default date to today
@@ -147,6 +154,15 @@
 
     document.getElementById("financeForm").addEventListener("submit", function(e) {
       e.preventDefault();
+      
+      // Check if the amount is empty
+      if (amountInput.value.trim() === "") {
+        errorMessage.style.display = "block"; // Show error message
+        return; // Prevent form submission
+      } else {
+        errorMessage.style.display = "none"; // Hide error message if valid
+      }
+
       const formData = new FormData();
       formData.append("date", document.getElementById("date").value);
       formData.append("category", document.getElementById("category").value);
@@ -155,7 +171,9 @@
 
       fetch(scriptURL, { method: "POST", body: formData })
         .then(() => {
+          // Reset all form data except for the date
           document.getElementById("financeForm").reset();
+          document.getElementById("date").value = today; // Keep the date intact
           updateCategories();  // Re-load categories
         })
         .catch(() => {
