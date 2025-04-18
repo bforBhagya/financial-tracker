@@ -30,11 +30,15 @@
     }
     input, select, button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-top: 5px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
+    }
+    input#amount {
+      font-size: 32px;
+      text-align: center;
     }
     button[type="submit"] {
       background-color: #007bff;
@@ -53,7 +57,7 @@
     }
     .type-btns button {
       width: 48%;
-      padding: 10px;
+      padding: 12px;
       font-size: 16px;
       border: none;
       border-radius: 8px;
@@ -167,6 +171,7 @@
     document.querySelectorAll(".num-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         amountInput.value += btn.textContent;
+        amountInput.style.fontSize = "32px"; // Adjust font size when typing
       });
     });
 
