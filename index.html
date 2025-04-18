@@ -197,11 +197,12 @@ const formData = {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData)
         });
-        alert("Submitted!");
         currentAmount = "";
-        updateAmountDisplay();
-        descriptionInput.value = "";
-        updateCategories();
+updateAmountDisplay();
+descriptionInput.value = "";
+setToday(); // Reset date to today
+updateCategories();
+
       } catch (err) {
         alert("Failed to submit.");
       }
