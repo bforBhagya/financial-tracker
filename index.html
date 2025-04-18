@@ -133,7 +133,7 @@
     }
 
     #categoryContainer {
-      display: none;
+      margin-top: 20px;
     }
 
     #categoryContainer.expense {
@@ -198,7 +198,7 @@
     </h1>
     <form id="financeForm">
       <label for="date">📅 Date</label>
-      <input type="date" id="date" name="date" required />
+      <input type="date" id="date" name="date" value="" required />
 
       <label for="type">🔁 Type</label>
       <div class="type-btns">
@@ -259,8 +259,62 @@
   </div>
 
   <script>
-    const form = document.getElementById("financeForm");
-    const amountInput = document.getElementById("amount");
-    const numpad = document.getElementById("numpad");
-    const amountDisplay = document.getElementById("amount-display");
-    const categoryContainer = document.get
+    let isDarkMode = false;
+    let selectedType = "";
+
+    // Toggle Theme Function
+    function toggleTheme() {
+      isDarkMode = !isDarkMode;
+      document.body.classList.toggle("dark", isDarkMode);
+      const themeToggleIcon = isDarkMode ? "🌞" : "🌙";
+      document.getElementById("themeToggle").textContent = themeToggleIcon;
+    }
+
+    // Set Type (Income or Expense)
+    function setType(type) {
+      selectedType = type;
+      const categoryOptions = document.querySelectorAll("#category option");
+      categoryOptions.forEach(option => {
+        if (option.classList.contains(selectedType)) {
+          option.style.display = "block";
+        } else {
+          option.style.display = "none";
+        }
+      });
+      document.getElementById("categoryContainer").classList.add(selectedType);
+    }
+
+    // Open Numpad
+    function openNumpad() {
+      document.getElementById("numpad").style.display = "block";
+      document.body.style.overflow = "hidden";
+    }
+
+    // Update Amount in Numpad
+    document.querySelectorAll(".num-btn").forEach(button => {
+      button.addEventListener("click", function() {
+        let amount = document.getElementById("amount-display").textContent;
+        document.getElementById("amount-display").textContent = amount === "0" ? this.textContent : amount + this.textContent;
+      });
+    });
+
+    // Clear Amount
+    document.getElementById("clearAmount").addEventListener("click", function() {
+      document.getElementById("amount-display").textContent = "0";
+    });
+
+    // Backspace
+    document.getElementById("backspace").addEventListener("click", function() {
+      let amount = document.getElementById("amount-display").textContent;
+      document.getElementById("amount-display").textContent = amount.slice(0, -1) || "0";
+    });
+
+    // Close Numpad and Save Amount
+    document.getElementById("closeNumpad").addEventListener("click", function() {
+      document.getElementById("amount").value = document.getElementById("amount-display").textContent;
+      document.getElementById("numpad").style.display = "none";
+      document.body.style.overflow = "auto";
+    });
+  </script>
+</body>
+</html>
