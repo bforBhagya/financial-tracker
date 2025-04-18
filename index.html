@@ -6,82 +6,77 @@
   <title>FinTracker</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      color: #333;
+      padding: 10px;
     }
+
     .container {
-      width: 100%;
       max-width: 500px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin: auto;
     }
+
     h1 {
       text-align: center;
       font-size: 2em;
     }
+
     label {
-      display: block;
       font-size: 1.2em;
-      margin-top: 15px;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 12px;
       margin-top: 10px;
+      display: block;
+    }
+
+    input, select, button {
       font-size: 1.2em;
-      border: 2px solid #ddd;
-      border-radius: 8px;
+      padding: 10px;
+      width: 100%;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
     }
-    button {
-      background-color: #007bff;
-      color: white;
-      cursor: pointer;
-      font-size: 1.2em;
-      border: none;
+
+    .type-buttons {
+      display: flex;
+      gap: 10px;
     }
-    button:hover {
-      background-color: #0056b3;
+
+    .type-buttons button {
+      flex: 1;
     }
-    .num-btn {
-      font-size: 1.5em;
-      padding: 15px;
-      margin: 5px;
-      width: 60px;
-      text-align: center;
-      cursor: pointer;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-    }
-    .type-btns button {
-      width: 48%;
-      margin-right: 4%;
-    }
-    .type-btns button:last-child {
-      margin-right: 0;
-    }
+
     #numpad {
       display: none;
-      margin-top: 20px;
+      text-align: center;
+      margin-top: 10px;
     }
-    #amount-display {
+
+    .display {
       font-size: 2em;
-      margin-bottom: 15px;
+      margin: 10px 0;
     }
+
+    .pad-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .pad-btn {
+      flex: 1;
+      padding: 15px;
+      font-size: 1.5em;
+    }
+
     @media (max-width: 600px) {
-      .container {
-        width: 100%;
+      .pad-btn {
+        font-size: 1.3em;
         padding: 10px;
       }
-      .num-btn {
-        width: 50px;
-        font-size: 1.2em;
-        padding: 10px;
+
+      .display {
+        font-size: 1.6em;
       }
     }
   </style>
@@ -91,129 +86,120 @@
     <h1>FinTracker</h1>
     <form id="financeForm">
       <label for="date">Date</label>
-      <input type="date" id="date" name="date" required />
+      <input type="date" id="date" required>
 
       <label>Type</label>
-      <div class="type-btns">
-        <button type="button" class="expense-btn" onclick="setType('expense')">Expense</button>
-        <button type="button" class="income-btn" onclick="setType('income')">Income</button>
+      <div class="type-buttons">
+        <button type="button" onclick="setType('expense')">Expense</button>
+        <button type="button" onclick="setType('income')">Income</button>
       </div>
 
       <label for="category">Category</label>
-      <select id="category" required>
-        <!-- Income Categories -->
-        <option class="income" value="salary">Salary</option>
-        <option class="income" value="allowance">Allowance</option>
-        <option class="income" value="deposit">Deposit</option>
-        <option class="income" value="loan_repay">Loan Repay</option>
-        <!-- Expense Categories -->
-        <option class="expense" value="food">Food</option>
-        <option class="expense" value="entertainment">Entertainment</option>
-        <option class="expense" value="clothes">Clothes</option>
-        <option class="expense" value="investments">Investments</option>
-        <option class="expense" value="bank_transfers">Bank Transfers</option>
-        <option class="expense" value="communication">Communication</option>
-        <option class="expense" value="gifts">Gifts</option>
-        <option class="expense" value="vehicle">Vehicle</option>
-        <option class="expense" value="bills">Bills</option>
-      </select>
+      <select id="category" required></select>
 
       <label for="description">Description</label>
-      <input type="text" id="description" required />
+      <input type="text" id="description" required>
 
       <label for="amount">Amount</label>
-      <input type="text" id="amount" readonly placeholder="Tap to enter amount" required onclick="openNumpad()" />
+      <input type="text" id="amount" readonly placeholder="Tap to enter amount" onclick="openNumpad()" required>
+
+      <div id="numpad">
+        <div class="display" id="amountDisplay">0</div>
+        <div class="pad-row">
+          <button type="button" class="pad-btn" onclick="appendNum('1')">1</button>
+          <button type="button" class="pad-btn" onclick="appendNum('2')">2</button>
+          <button type="button" class="pad-btn" onclick="appendNum('3')">3</button>
+        </div>
+        <div class="pad-row">
+          <button type="button" class="pad-btn" onclick="appendNum('4')">4</button>
+          <button type="button" class="pad-btn" onclick="appendNum('5')">5</button>
+          <button type="button" class="pad-btn" onclick="appendNum('6')">6</button>
+        </div>
+        <div class="pad-row">
+          <button type="button" class="pad-btn" onclick="appendNum('7')">7</button>
+          <button type="button" class="pad-btn" onclick="appendNum('8')">8</button>
+          <button type="button" class="pad-btn" onclick="appendNum('9')">9</button>
+        </div>
+        <div class="pad-row">
+          <button type="button" class="pad-btn" onclick="clearAmount()">C</button>
+          <button type="button" class="pad-btn" onclick="appendNum('0')">0</button>
+          <button type="button" class="pad-btn" onclick="backspace()">←</button>
+        </div>
+        <button type="button" onclick="submitAmount()">Enter</button>
+      </div>
 
       <button type="submit">Submit</button>
     </form>
   </div>
 
-  <!-- Custom Number Pad -->
-  <div id="numpad">
-    <div class="amount-display" id="amount-display">0</div>
-    <div>
-      <button class="num-btn">1</button>
-      <button class="num-btn">2</button>
-      <button class="num-btn">3</button>
-      <button class="num-btn">4</button>
-      <button class="num-btn">5</button>
-      <button class="num-btn">6</button>
-      <button class="num-btn">7</button>
-      <button class="num-btn">8</button>
-      <button class="num-btn">9</button>
-      <button id="clearAmount">Clear</button>
-      <button class="num-btn">0</button>
-      <button id="backspace">Backspace</button>
-    </div>
-    <button id="closeNumpad">Enter</button>
-  </div>
-
   <script>
-    // Set default date
-    document.getElementById('date').valueAsDate = new Date();
+    const categorySelect = document.getElementById('category');
+    const dateInput = document.getElementById('date');
+    const amountInput = document.getElementById('amount');
+    const display = document.getElementById('amountDisplay');
+    const numpad = document.getElementById('numpad');
 
-    let selectedType = 'expense';
-
-    function setType(type) {
-      selectedType = type;
-      const categorySelect = document.getElementById('category');
-      const options = categorySelect.options;
-      for (let i = 0; i < options.length; i++) {
-        const option = options[i];
-        option.style.display = option.classList.contains(type) ? 'block' : 'none';
-      }
-
-      // Select first visible option by default
-      for (let i = 0; i < options.length; i++) {
-        if (options[i].style.display === 'block') {
-          categorySelect.value = options[i].value;
-          break;
-        }
-      }
-    }
-
-    // Set default to expense on load
-    window.onload = function () {
-      setType('expense');
+    const categories = {
+      income: ["Salary", "Allowance", "Deposit", "Loan Repay"],
+      expense: ["Food", "Entertainment", "Clothes", "Investments", "Bank Transfers", "Communication", "Gifts", "Vehicle", "Bills"]
     };
 
-    // Open numpad
-    function openNumpad() {
-      document.getElementById('numpad').style.display = "block";
+    let currentType = 'expense';
+
+    function setType(type) {
+      currentType = type;
+      updateCategories();
     }
 
-    // Number pad input
-    document.querySelectorAll('.num-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        const display = document.getElementById('amount-display');
-        let current = display.innerText;
-        display.innerText = current === '0' ? button.innerText : current + button.innerText;
+    function updateCategories() {
+      categorySelect.innerHTML = '';
+      categories[currentType].forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat.toLowerCase().replace(/\s/g, "_");
+        opt.textContent = cat;
+        categorySelect.appendChild(opt);
       });
+    }
+
+    function openNumpad() {
+      numpad.style.display = "block";
+    }
+
+    function appendNum(num) {
+      if (display.innerText === '0') {
+        display.innerText = num;
+      } else {
+        display.innerText += num;
+      }
+    }
+
+    function backspace() {
+      let val = display.innerText;
+      display.innerText = val.length <= 1 ? '0' : val.slice(0, -1);
+    }
+
+    function clearAmount() {
+      display.innerText = '0';
+    }
+
+    function submitAmount() {
+      amountInput.value = display.innerText;
+      numpad.style.display = "none";
+    }
+
+    document.getElementById('financeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert("Submitted!");
+      const dateVal = dateInput.value;
+      this.reset();
+      dateInput.value = dateVal;
+      setType(currentType);
+      display.innerText = '0';
     });
 
-    document.getElementById('clearAmount').addEventListener('click', () => {
-      document.getElementById('amount-display').innerText = '0';
-    });
-
-    document.getElementById('backspace').addEventListener('click', () => {
-      const display = document.getElementById('amount-display');
-      const text = display.innerText;
-      display.innerText = text.length > 1 ? text.slice(0, -1) : '0';
-    });
-
-    document.getElementById('closeNumpad').addEventListener('click', () => {
-      const value = document.getElementById('amount-display').innerText;
-      document.getElementById('amount').value = value;
-      document.getElementById('numpad').style.display = "none";
-    });
-
-    document.getElementById('financeForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      alert('Form Submitted');
-      document.getElementById('financeForm').reset();
-      document.getElementById('date').valueAsDate = new Date();
-      setType(selectedType); // Retain type and update category display
-    });
+    // Init
+    dateInput.valueAsDate = new Date();
+    setType('expense');
   </script>
 </body>
 </html>
