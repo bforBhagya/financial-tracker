@@ -50,22 +50,23 @@
       font-size: 16px;
       padding: 10px 20px;
       border-radius: 5px;
+      flex: 1;
     }
     .toggle-buttons button.active {
       color: #fff;
       font-weight: bold;
     }
     #expenseBtn {
-      background-color: #2ecc71; /* Green */
-    }
-    #expenseBtn.active {
-      background-color: #27ae60; /* Darker green */
-    }
-    #incomeBtn {
       background-color: #e74c3c; /* Red */
     }
-    #incomeBtn.active {
+    #expenseBtn.active {
       background-color: #c0392b; /* Darker red */
+    }
+    #incomeBtn {
+      background-color: #2ecc71; /* Green */
+    }
+    #incomeBtn.active {
+      background-color: #27ae60; /* Darker green */
     }
   </style>
 </head>
@@ -76,8 +77,8 @@
     
     <!-- Swap the button positions here -->
     <div class="toggle-buttons">
-      <button type="button" id="expenseBtn">Expense</button>
       <button type="button" id="incomeBtn" class="active">Income</button>
+      <button type="button" id="expenseBtn">Expense</button>
     </div>
     
     <select id="category" required>
