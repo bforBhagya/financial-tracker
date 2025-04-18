@@ -49,6 +49,25 @@
     h1 {
       text-align: center;
       margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #themeToggle {
+      margin-left: 10px;
+      cursor: pointer;
+      font-size: 24px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px 15px;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark #themeToggle {
+      background-color: #333;
+      color: #fff;
     }
 
     label {
@@ -158,30 +177,13 @@
       background: #007bff;
       margin-top: 10px;
     }
-
-    #themeToggle {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      padding: 10px 15px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 24px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    body.dark #themeToggle {
-      background-color: #333;
-      color: #fff;
-    }
   </style>
 </head>
 <body>
-  <div id="themeToggle" onclick="toggleTheme()">🌙</div>
   <div class="container">
-    <h1>💰 FinTracker</h1>
+    <h1>💰 FinTracker
+      <span id="themeToggle" onclick="toggleTheme()">🌙</span>
+    </h1>
     <form id="financeForm">
       <label for="date">📅 Date</label>
       <input type="date" id="date" name="date" required />
@@ -281,36 +283,22 @@
     });
 
     document.getElementById("closeNumpad").addEventListener("click", () => {
-      amountInput.value = formatAmount(currentAmount); // Update the amount field with the final number
+      amountInput.value = formatAmount(currentAmount);
       numpad.style.display = "none";
     });
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const date = document.getElementById("date").value;
-      const category = document.getElementById("category").value;
-      const description = document.getElementById("description").value;
-      const amount = currentAmount;
-
-      if (amount.trim() === "") {
-        alert("Please enter the amount 💸");
-        return;
-      }
-
-      console.log("Submitted:", { date, category, description, amount, type: transactionType });
-
-      // Reset form except date
-      document.getElementById("category").value = "";
-      document.getElementById("description").value = "";
-      currentAmount = "";
-      updateAmountDisplay();
-    });
-
-    // Toggle theme between light and dark
+    // Toggle dark/light mode
     function toggleTheme() {
-      document.body.classList.toggle('dark');
-      document.querySelector('.container').classList.toggle('dark');
-      const themeIcon = document.getElementById("themeToggle");
-      if (document.body.classList.contains('dark')) {
-        themeIcon.textContent = "🌞
+      document.body.classList.toggle("dark");
+      document.querySelector(".container").classList.toggle("dark");
+      const currentTheme = document.body.classList.contains("dark") ? "🌞" : "🌙";
+      document.getElementById("themeToggle").textContent = currentTheme;
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Form submitted successfully!");
+    });
+  </script>
+</body>
+</html>
