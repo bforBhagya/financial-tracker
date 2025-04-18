@@ -177,13 +177,15 @@
       transactionType = type;
     }
 
-    amountInput.addEventListener("focus", () => {
-      numpad.style.display = "block";
-    });
+    // Format the number to financial format (with commas and 2 decimal places)
+    function formatAmount(amount) {
+      let num = parseFloat(amount.replace(/,/g, '')) || 0;
+      return num.toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
 
     // Update the displayed amount on the numpad
     function updateAmountDisplay() {
-      amountDisplay.textContent = currentAmount || "0";
+      amountDisplay.textContent = formatAmount(currentAmount);
     }
 
     // Add numbers to the currentAmount
@@ -207,7 +209,7 @@
     });
 
     document.getElementById("closeNumpad").addEventListener("click", () => {
-      amountInput.value = currentAmount; // Update the amount field with the final number
+      amountInput.value = formatAmount(currentAmount); // Update the amount field with the final number
       numpad.style.display = "none";
     });
 
