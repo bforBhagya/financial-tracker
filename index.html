@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Finance Tracker</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #121212;
-      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 20px;
+      background: #121212;
+      color: #fff;
     }
 
     h2 {
@@ -19,32 +19,59 @@
     }
 
     form {
-      background: #1e1e1e;
+      background: #1f1f1f;
       padding: 20px;
-      border-radius: 15px;
-      max-width: 800px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      max-width: 500px;
       margin: auto;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-      transition: 0.3s ease;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 12px;
+      display: block;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      background-color: #2c2c2c;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    button {
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s ease;
+    }
+
+    .submit-button {
+      background-color: #007bff;
+    }
+
+    .submit-button:hover {
+      background-color: #0056b3;
     }
 
     .toggle-buttons {
       display: flex;
       justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .toggle-buttons button {
       flex: 1;
+      margin: 0 5px;
       padding: 12px;
-      border: none;
-      border-radius: 10px;
       font-size: 16px;
-      font-weight: bold;
-      color: white;
-      cursor: pointer;
-      transition: 0.2s;
+      border-radius: 8px;
     }
 
     #incomeBtn {
@@ -63,104 +90,81 @@
       background-color: #c0392b;
     }
 
-    .form-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-
-    .form-row input,
-    .form-row select,
-    .form-row button {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
+    option {
       background-color: #2c2c2c;
       color: #fff;
-      outline: none;
-      transition: background 0.2s;
-    }
-
-    .form-row input:focus,
-    .form-row select:focus {
-      background-color: #333;
-    }
-
-    .form-row button.submit-button {
-      background-color: #007bff;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .form-row button.submit-button:hover {
-      background-color: #0056b3;
     }
 
     @media (max-width: 600px) {
-      .form-row {
-        flex-direction: column;
+      form {
+        padding: 15px;
       }
-    }
-
-    .error {
-      color: #ff4d4d;
-      font-size: 14px;
-      margin-bottom: 10px;
-      text-align: center;
-      display: none;
+      input, select, button {
+        font-size: 15px;
+      }
     }
   </style>
 </head>
 <body>
-  <h2>💰 Personal Finance Tracker</h2>
-
+  <h2>💵 Personal Finance Tracker</h2>
   <form id="financeForm">
+    <label for="date">Date</label>
+    <input type="date" id="date" required />
+
     <div class="toggle-buttons">
-      <button type="button" id="incomeBtn" class="active">Income</button>
-      <button type="button" id="expenseBtn">Expense</button>
+      <button type="button" id="incomeBtn">💰 Income</button>
+      <button type="button" id="expenseBtn" class="active">💸 Expense</button>
     </div>
 
-    <div class="form-row">
-      <input type="date" id="date" required />
-      <select id="category" required>
-        <option value="" disabled selected>Select Category</option>
-      </select>
-    </div>
+    <label for="category">Select Category</label>
+    <select id="category" required>
+      <option value="" disabled selected>Select Category</option>
+    </select>
 
-    <div class="form-row">
-      <input type="text" id="description" placeholder="Description" />
-      <input type="number" id="amount" placeholder="Amount (LKR)" required />
-      <button type="submit" class="submit-button">➕</button>
-    </div>
+    <label for="description">Description</label>
+    <input type="text" id="description" placeholder="Description" required />
 
-    <div id="errorMsg" class="error">⚠️ Enter the amount!</div>
+    <label for="amount">Amount (LKR)</label>
+    <input type="number" id="amount" placeholder="0.00" required />
+
+    <button type="submit" class="submit-button">🔄 Submit</button>
   </form>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwrf3aen8YykDCrRRTQsr-oLtWxLnehk3yXNI6HfXjPqnbWLY1NmLSk3C1jeZloA5gi6w/exec";
 
-    const expenseBtn = document.getElementById("expenseBtn");
     const incomeBtn = document.getElementById("incomeBtn");
+    const expenseBtn = document.getElementById("expenseBtn");
     const categorySelect = document.getElementById("category");
     const amountInput = document.getElementById("amount");
-    const errorMsg = document.getElementById("errorMsg");
+    const form = document.getElementById("financeForm");
+
+    let currentType = "Expense"; // Default type
 
     const categories = {
-      "Income": ["Deposits", "Salary", "Allowance", "Loan Repays"],
-      "Expense": ["Food", "Entertainment", "Vehicle", "Transport", "Investments", "Bank Transfers", "Clothes"]
+      "Income": [
+        { name: "Deposits", emoji: "🏦" },
+        { name: "Salary", emoji: "💼" },
+        { name: "Allowance", emoji: "🎁" },
+        { name: "Loan Repays", emoji: "💳" }
+      ],
+      "Expense": [
+        { name: "Food", emoji: "🍽️" },
+        { name: "Entertainment", emoji: "🎬" },
+        { name: "Vehicle", emoji: "🚗" },
+        { name: "Transport", emoji: "🚌" },
+        { name: "Investments", emoji: "📈" },
+        { name: "Bank Transfers", emoji: "🏛️" },
+        { name: "Clothes", emoji: "👕" }
+      ]
     };
-
-    let currentType = "Income";
 
     function updateCategories() {
       categorySelect.innerHTML = '<option value="" disabled selected>Select Category</option>';
-      categories[currentType].forEach(cat => {
+      categories[currentType].forEach(item => {
         const option = document.createElement("option");
-        option.value = cat;
-        option.textContent = cat;
+        option.value = item.name;
+        option.textContent = `${item.emoji} ${item.name}`;
         categorySelect.appendChild(option);
       });
     }
@@ -179,44 +183,45 @@
       updateCategories();
     });
 
-    updateCategories();
+    // Set today's date by default
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById("date").value = today;
 
-    document.getElementById("date").value = new Date().toISOString().split("T")[0];
-
+    // Auto-set amount for "Bank Transfers"
     categorySelect.addEventListener("change", () => {
       if (categorySelect.value === "Bank Transfers") {
         amountInput.value = 25;
+      } else {
+        amountInput.value = '';
       }
     });
 
-    document.getElementById("financeForm").addEventListener("submit", function (e) {
+    form.addEventListener("submit", function(e) {
       e.preventDefault();
-
       if (!amountInput.value) {
-        errorMsg.style.display = "block";
+        alert("🚫 Please enter the amount.");
         return;
       }
 
-      errorMsg.style.display = "none";
-
       const formData = new FormData();
       formData.append("date", document.getElementById("date").value);
-      formData.append("category", document.getElementById("category").value);
+      formData.append("category", categorySelect.value);
       formData.append("description", document.getElementById("description").value);
-      formData.append("amount", document.getElementById("amount").value);
-      formData.append("type", currentType);
+      formData.append("amount", amountInput.value);
 
       fetch(scriptURL, { method: "POST", body: formData })
         .then(() => {
-          const today = new Date().toISOString().split("T")[0];
-          document.getElementById("financeForm").reset();
+          form.reset();
           document.getElementById("date").value = today;
           updateCategories();
         })
         .catch(() => {
-          alert("Error! Data not submitted.");
+          alert("❌ Error! Data not submitted.");
         });
     });
+
+    // Load initial categories
+    updateCategories();
   </script>
 </body>
 </html>
