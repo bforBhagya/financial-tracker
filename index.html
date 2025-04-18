@@ -5,12 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FinTracker 💰</title>
   <style>
+    :root {
+      --bg-light: #f4f7fa;
+      --bg-dark: #1f1f1f;
+      --text-light: #333;
+      --text-dark: #f4f7fa;
+      --button-light: #007bff;
+      --button-dark: #007bff;
+      --input-light: #fff;
+      --input-dark: #333;
+      --input-border-light: #ccc;
+      --input-border-dark: #555;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f4f7fa;
+      background: var(--bg-light);
       margin: 0;
       padding: 20px;
+      color: var(--text-light);
+      transition: background 0.3s ease, color 0.3s ease;
     }
+
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
     .container {
       max-width: 400px;
       margin: auto;
@@ -18,30 +39,43 @@
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
     }
+
+    .container.dark {
+      background: #333;
+    }
+
     h1 {
       text-align: center;
       margin-bottom: 20px;
     }
+
     label {
       font-weight: bold;
       display: block;
       margin-top: 10px;
     }
+
     input, select, button {
       width: 100%;
       padding: 12px;
       margin-top: 5px;
-      border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
+      border: 1px solid var(--input-border-light);
+      background: var(--input-light);
+      color: var(--text-light);
     }
-    input#amount {
-      font-size: 16px;
-      text-align: center;
+
+    body.dark input, body.dark select, body.dark button {
+      background: var(--input-dark);
+      color: var(--text-dark);
+      border: 1px solid var(--input-border-dark);
     }
+
     button[type="submit"] {
-      background-color: #007bff;
+      background-color: var(--button-light);
       color: white;
       font-size: 18px;
       display: flex;
@@ -50,11 +84,17 @@
       gap: 8px;
       margin-top: 20px;
     }
+
+    body.dark button[type="submit"] {
+      background-color: var(--button-dark);
+    }
+
     .type-btns {
       display: flex;
       justify-content: space-between;
       margin: 10px 0;
     }
+
     .type-btns button {
       width: 48%;
       padding: 12px;
@@ -64,12 +104,15 @@
       color: white;
       cursor: pointer;
     }
+
     .income-btn {
       background-color: green;
     }
+
     .expense-btn {
       background-color: red;
     }
+
     #numpad {
       display: none;
       position: fixed;
@@ -82,6 +125,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
       z-index: 999;
     }
+
     #numpad button {
       font-size: 20px;
       padding: 15px;
@@ -90,29 +134,52 @@
       background: #333;
       color: white;
     }
+
     #numpad div {
       display: grid;
       grid-template-columns: repeat(3, 60px);
       gap: 10px;
       justify-content: center;
     }
+
     #numpad .num-btn {
       font-size: 20px;
       padding: 10px;
     }
+
     #numpad .amount-display {
       font-size: 48px;
       color: white;
       text-align: center;
       margin-bottom: 10px;
     }
-    #closeNumpad {
+
+    #numpad #closeNumpad {
       background: #007bff;
       margin-top: 10px;
+    }
+
+    #themeToggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 24px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark #themeToggle {
+      background-color: #333;
+      color: #fff;
     }
   </style>
 </head>
 <body>
+  <div id="themeToggle" onclick="toggleTheme()">🌙</div>
   <div class="container">
     <h1>💰 FinTracker</h1>
     <form id="financeForm">
@@ -239,6 +306,11 @@
       currentAmount = "";
       updateAmountDisplay();
     });
-  </script>
-</body>
-</html>
+
+    // Toggle theme between light and dark
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      document.querySelector('.container').classList.toggle('dark');
+      const themeIcon = document.getElementById("themeToggle");
+      if (document.body.classList.contains('dark')) {
+        themeIcon.textContent = "🌞
