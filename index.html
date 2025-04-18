@@ -2,92 +2,111 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Finance Tracker</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #121212;
-      color: #ffffff;
+    * {
+      box-sizing: border-box;
     }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      margin: 0;
+      padding: 20px;
+    }
+
     .container {
       max-width: 500px;
       margin: auto;
-      padding: 10px;
-    }
-    form {
-      background: #1e1e1e;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #333;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 12px;
-      border-radius: 5px;
-      border: 1px solid #444;
-      background-color: #2c2c2c;
-      color: #ffffff;
-      font-size: 16px;
-    }
-    button {
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      opacity: 0.9;
-    }
-    .submit-button {
-      background-color: #007bff;
-    }
-    .submit-button:hover {
-      background-color: #0056b3;
-    }
-    .toggle-buttons {
-      display: flex;
-      gap: 20px;
-      margin-top: 10px;
-      justify-content: center;
-    }
-    .toggle-buttons button {
-      font-size: 16px;
-      padding: 10px 20px;
-      border-radius: 5px;
-    }
-    .toggle-buttons button.active {
-      color: #fff;
-      font-weight: bold;
-    }
-    #incomeBtn {
-      background-color: #2ecc71;
-    }
-    #incomeBtn.active {
-      background-color: #27ae60;
-    }
-    #expenseBtn {
-      background-color: #e74c3c;
-    }
-    #expenseBtn.active {
-      background-color: #c0392b;
+      background-color: #161b22;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
     }
 
-    @media (max-width: 400px) {
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #58a6ff;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input, select, button {
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 16px;
+      background-color: #21262d;
+      color: #c9d1d9;
+      transition: 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 5px #58a6ff;
+      background-color: #30363d;
+    }
+
+    button {
+      background-color: #238636;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2ea043;
+    }
+
+    .toggle-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .toggle-buttons button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      transition: 0.3s ease;
+    }
+
+    #incomeBtn {
+      background-color: #2ea043;
+    }
+
+    #incomeBtn.active {
+      background-color: #238636;
+    }
+
+    #expenseBtn {
+      background-color: #f85149;
+    }
+
+    #expenseBtn.active {
+      background-color: #da3633;
+    }
+
+    @media (max-width: 480px) {
       .toggle-buttons {
         flex-direction: column;
-        gap: 10px;
-      }
-      input, select, button {
-        font-size: 14px;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Personal Finance Tracker</h2>
+    <h2>💰 Finance Tracker</h2>
     <form id="financeForm">
       <input type="date" id="date" required />
 
@@ -102,13 +121,12 @@
 
       <input type="text" id="description" placeholder="Description" />
       <input type="number" id="amount" placeholder="Amount (LKR)" required />
-      <button type="submit" class="submit-button">Submit</button>
+      <button type="submit">➕ Submit</button>
     </form>
   </div>
 
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbwrf3aen8YykDCrRRTQsr-oLtWxLnehk3yXNI6HfXjPqnbWLY1NmLSk3C1jeZloA5gi6w/exec";
-
     const incomeBtn = document.getElementById("incomeBtn");
     const expenseBtn = document.getElementById("expenseBtn");
     const categorySelect = document.getElementById("category");
@@ -119,7 +137,7 @@
       "Expense": ["Food", "Entertainment", "Vehicle", "Transport", "Investments", "Bank Transfers", "Clothes"]
     };
 
-    let currentType = "Expense"; // Default is Expense
+    let currentType = "Expense";
     updateCategories();
     setToday();
 
@@ -161,7 +179,7 @@
     document.getElementById("financeForm").addEventListener("submit", function(e) {
       e.preventDefault();
       if (!amountInput.value) {
-        alert("Please enter the amount!");
+        alert("Enter amount!");
         return;
       }
 
@@ -180,7 +198,7 @@
           updateCategories();
         })
         .catch(() => {
-          alert("Error! Data not submitted.");
+          alert("❌ Error! Data not submitted.");
         });
     });
   </script>
